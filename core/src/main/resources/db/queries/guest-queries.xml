@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Guest DB queries</comment>
+
+	<entry key="guests.save">
+		<![CDATA[
+			SELECT
+			 	 id      as guest_id
+		 		,name    as guest_name
+		 		,surname as guest_surname
+			FROM FINAL TABLE (
+				INSERT INTO guests (name, surname)
+				VALUES (?, ?)
+			)
+		]]>
+	</entry>
+
+	<entry key="guests.get-by-id">
+		<![CDATA[
+			SELECT
+		 		 g.id      as guest_id
+		 		,g.name    as guest_name
+		 		,g.surname as guest_surname
+			FROM guests g
+			WHERE g.id = ?
+		]]>
+	</entry>
+</properties>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Booking DB queries</comment>
+
+	<entry key="bookings.save">
+		<![CDATA[
+			SELECT
+			 	 id             as booking_id
+		 		,room_id        as booking_room_id
+		 		,guest_id       as booking_guest_id
+		 		,status         as booking_status
+		 		,check_in_time  as booking_check_in_time
+		 		,check_out_time as booking_check_out_time
+			FROM FINAL TABLE (
+				INSERT INTO bookings (room_id, guest_id, status, check_in_time, check_out_time)
+				VALUES (?, ?, ?, ?, ?)
+			)
+		]]>
+	</entry>
+
+	<entry key="bookings.update">
+		<![CDATA[
+			SELECT
+			 	 id             as booking_id
+		 		,room_id        as booking_room_id
+		 		,guest_id       as booking_guest_id
+		 		,status         as booking_status
+		 		,check_in_time  as booking_check_in_time
+		 		,check_out_time as booking_check_out_time
+			FROM FINAL TABLE (
+				UPDATE bookings
+				SET
+					room_id = ?,
+					guest_id = ?,
+					status = ?,
+					check_in_time = ?,
+					check_out_time = ?
+				WHERE id = ?
+			)
+		]]>
+	</entry>
+
+	<entry key="bookings.get-active-by-room-id">
+		<![CDATA[
+			SELECT
+			 	 b.id             as booking_id
+		 		,b.room_id        as booking_room_id
+		 		,b.guest_id       as booking_guest_id
+		 		,b.status         as booking_status
+		 		,b.check_in_time  as booking_check_in_time
+		 		,b.check_out_time as booking_check_out_time
+			FROM bookings b
+			WHERE b.room_id = ? AND b.status = 'ACTIVE'
+		]]>
+	</entry>
+
+	<entry key="bookings.get-completed-by-room-id">
+		<![CDATA[
+			SELECT
+			 	 b.id             as booking_id
+		 		,b.room_id        as booking_room_id
+		 		,b.guest_id       as booking_guest_id
+		 		,b.status         as booking_status
+		 		,b.check_in_time  as booking_check_in_time
+		 		,b.check_out_time as booking_check_out_time
+			FROM bookings b
+			WHERE b.room_id = ? AND b.status = 'COMPLETED'
+		]]>
+	</entry>
+</properties>

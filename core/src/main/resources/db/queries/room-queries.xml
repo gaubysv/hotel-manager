@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Room DB queries</comment>
+
+	<entry key="rooms.update">
+		<![CDATA[
+			SELECT
+			 	 id     as room_id
+		 		,number as room_number
+		 		,status as room_status
+			FROM FINAL TABLE (
+				UPDATE rooms
+				SET
+					number = ?,
+					status = ?
+				WHERE id = ?
+			)
+		]]>
+	</entry>
+
+	<entry key="rooms.get-by-id">
+		<![CDATA[
+			SELECT
+		 		 r.id     as room_id
+		 		,r.number as room_number
+		 		,r.status as room_status
+			FROM rooms r
+			WHERE r.id = ?
+		]]>
+	</entry>
+
+	<entry key="rooms.get-all">
+		<![CDATA[
+			SELECT
+		 		 r.id     as room_id
+		 		,r.number as room_number
+		 		,r.status as room_status
+			FROM rooms r
+			ORDER BY r.number ASC
+		]]>
+	</entry>
+
+	<entry key="rooms.lookup">
+		<![CDATA[
+			SELECT
+		 		 r.id     as room_id
+		 		,r.number as room_number
+		 		,r.status as room_status
+			FROM rooms r
+			WHERE (? IS NULL OR r.number = ?)
+			AND (? IS NULL OR r.status = ?)
+			ORDER BY r.number ASC
+		]]>
+	</entry>
+
+	<entry key="rooms.get-available">
+		<![CDATA[
+			SELECT
+		 		 r.id     as room_id
+		 		,r.number as room_number
+		 		,r.status as room_status
+			FROM rooms r
+			WHERE status = 'AVAILABLE'
+			ORDER BY r.number ASC
+		]]>
+	</entry>
+</properties>
